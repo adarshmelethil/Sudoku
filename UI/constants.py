@@ -10,15 +10,15 @@ BACKGROUND_COLOR_GAME = "#92877d"
 
 
 BACKGROUND_ZONE = [
-  "#fff7e6",
-  "#3b0b0b",
+  "#eeeeee",
+  "#101010",
 ]
 BACKGROUND_SELECT = "#00f"
 
 BACKGROUND_COLOR_CELL_EMPTY = "#9e948a"
 
 BACKGROUND_COLOR_NUM = [
-  "#15ce19",
+  "#00b900",
   "#12b916",
   "#10a414",
   "#0e9011",

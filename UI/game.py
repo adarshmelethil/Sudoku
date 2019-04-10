@@ -3,8 +3,8 @@
 from tkinter import Frame, Label, CENTER
 import logging
 
-import UI.constants as c
-import UI.logic as l
+import constants as c
+import logic as l
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -34,6 +34,7 @@ class GameGrid(Frame):
 
     self.history = []
 
+    self.initGrid()
     self.updateGrid()
 
   def initGrid(self):
@@ -46,11 +47,12 @@ class GameGrid(Frame):
     background.grid()
 
     game_background = Frame(
-      backgroud,
+      background,
       bg=c.BACKGROUND_COLOR_GAME,
-      width=c.WIDTH/2,
+      width=c.WIDTH//2,
       height=c.HEIGHT,
     )
+    game_background.grid()
 
     zones = []
     for i in range(3):
@@ -59,8 +61,8 @@ class GameGrid(Frame):
         zone = Frame(
           game_background,
           bg=c.BACKGROUND_ZONE[(i+j)%2],
-          width=c.SIZE/3,
-          height=c.SIZE/3,
+          width=(c.WIDTH//2)//3,
+          height=c.HEIGHT//3,
         )
         zone.grid(
           row=i,
@@ -74,8 +76,8 @@ class GameGrid(Frame):
       for j in range(9):
         cell = Frame(zones[i//3][j//3], 
           bg=c.BACKGROUND_COLOR_CELL_EMPTY,
-          width=c.SIZE/9,
-          height=c.SIZE/9,
+          width=(c.WIDTH//2)//9,
+          height=c.HEIGHT//9,
         )
         cell.grid(
           row=i,
@@ -94,6 +96,30 @@ class GameGrid(Frame):
         grid_row.append(t)
       self.grid_cells.append(grid_row)
 
+    # Info Frame
+    info_background = Frame(
+      background,
+      bg=c.BACKGROUND_COLOR_GAME,
+      width=c.WIDTH//2,
+      height=c.HEIGHT,
+    )
+    info_background.grid()
+    title_frame = Frame(
+      info_background,
+      
+    )
+    info_title =  Label(
+      master=info_background, 
+      text="Info Frame",
+      bg=c.BACKGROUND_COLOR_CELL_EMPTY,
+      justify=CENTER,
+      font=c.FONT, 
+      width=c.WIDTH//2,
+      height=10,
+    )
+    info_title.cell = (0,0)
+    info_title.grid()
+
   def updateGrid(self):
     print("Updating Grid")
     hc, vc, zc = l.validGrid(self.grid_values)
@@ -105,17 +131,14 @@ class GameGrid(Frame):
             bg=c.BACKGROUND_COLOR_CELL_EMPTY,
           )
         else:
-          if self.swap_vals[0] == (i, j) or self.swap_vals[1] == (i, j):
-            backgroundColor = c.BACKGROUND_SELECT
+          if (i, j) in hc:
+            backgroundColor = c.COLOR_ERROR[0]
+          elif (i, j) in vc:
+            backgroundColor = c.COLOR_ERROR[1]
+          elif (i, j) in zc:
+            backgroundColor = c.COLOR_ERROR[2]
           else:
-            if (i, j) in hc:
-              backgroundColor = c.COLOR_ERROR[0]
-            elif (i, j) in vc:
-              backgroundColor = c.COLOR_ERROR[1]
-            elif (i, j) in zc:
-              backgroundColor = c.COLOR_ERROR[2]
-            else:
-              backgroundColor = c.BACKGROUND_COLOR_NUM[self.grid_values[i][j]-1]
+            backgroundColor = c.BACKGROUND_COLOR_NUM[self.grid_values[i][j]-1]
           self.grid_cells[i][j].configure(
             text=str(self.grid_values[i][j]),
             bg=backgroundColor,
