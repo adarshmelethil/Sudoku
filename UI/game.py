@@ -103,18 +103,21 @@ class GameGrid(Frame):
       width=c.WIDTH//2,
       height=c.HEIGHT,
     )
+    info_background.cell = (0,1)
     info_background.grid()
     title_frame = Frame(
       info_background,
-      
+      bg=c.BACKGROUND_COLOR_CELL_EMPTY,
+      width=25, height=15,
     )
+    title_frame.grid()
     info_title =  Label(
-      master=info_background, 
+      master=title_frame, 
       text="Info Frame",
       bg=c.BACKGROUND_COLOR_CELL_EMPTY,
       justify=CENTER,
       font=c.FONT, 
-      width=c.WIDTH//2,
+      width=20,
       height=10,
     )
     info_title.cell = (0,0)
