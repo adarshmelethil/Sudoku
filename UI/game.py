@@ -38,21 +38,13 @@ class GameGrid(Frame):
     self.updateGrid()
 
   def initGrid(self):
-    background = Frame(
-      self, 
-      bg=c.BACKGROUND_COLOR_GAME,
-      width=c.WIDTH,
-      height=c.HEIGHT,
-    )
-    background.grid()
-
     game_background = Frame(
-      background,
+      self,
       bg=c.BACKGROUND_COLOR_GAME,
       width=c.WIDTH//2,
       height=c.HEIGHT,
     )
-    game_background.grid()
+    game_background.grid(row=0, column=0)
 
     zones = []
     for i in range(3):
@@ -64,10 +56,7 @@ class GameGrid(Frame):
           width=(c.WIDTH//2)//3,
           height=c.HEIGHT//3,
         )
-        zone.grid(
-          row=i,
-          column=j,
-        )
+        zone.grid(row=i, column=j)
         h_zones.append(zone)
       zones.append(h_zones)
 
